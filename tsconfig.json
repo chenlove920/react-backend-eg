@@ -26,11 +26,11 @@
       "@components/*": [
         "src/components/*"
       ],
-      "@Tes/*": [
-        "src/components/Tes/*"
-      ],
       "@store/*": [
         "src/store/*"
+      ],
+      "@types/*": [
+        "src/types/*"
       ]
     }
   }
