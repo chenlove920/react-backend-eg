@@ -18,8 +18,6 @@ vite react 项目说明
 
 8. types 数据类型约束
 
-
-
 # vite-aliases
 
 ### pnpm add vite-aliases -D
@@ -61,6 +59,10 @@ vite react 项目说明
         </RouterProvider>
 </pre>
 
+# antd插件
 
+### pnpm install antd --save
 
+### pnpm add @ant-design/v5-patch-for-react-19 --save
 
+### pnpm install @ant-design/icons@5.x --save
