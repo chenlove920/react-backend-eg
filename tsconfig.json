@@ -26,17 +26,14 @@
       "@components/*": [
         "src/components/*"
       ],
+      "@Tes/*": [
+        "src/components/Tes/*"
+      ],
       "@store/*": [
         "src/store/*"
       ],
       "@utils/*": [
         "src/utils/*"
-      ],
-      "@css/*": [
-        "src/assets/css/*"
-      ],
-      "@types/*": [
-        "src/types/*"
       ]
     }
   }

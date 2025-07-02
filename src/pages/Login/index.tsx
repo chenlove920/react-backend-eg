@@ -9,9 +9,6 @@ const Login = () => {
         const { mobile, code } = values
         console.log(mobile, code, values)
     }
-    // const onFinishFailed = ({ values, errorFields, outOfDate }) => {
-
-    // }
     return (
         <div className="login">
             <Card className="login-container">
