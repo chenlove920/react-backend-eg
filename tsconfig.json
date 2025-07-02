@@ -28,6 +28,9 @@
       ],
       "@Tes/*": [
         "src/components/Tes/*"
+      ],
+      "@store/*": [
+        "src/store/*"
       ]
     }
   }

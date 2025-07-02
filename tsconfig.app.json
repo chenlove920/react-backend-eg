@@ -30,8 +30,14 @@
       "@pages/*": [
         "src/pages/*"
       ],
+      "@components/*": [
+        "src/components/*"
+      ],
       "@router/*": [
         "src/router/*"
+      ],
+      "@store/*": [
+        "src/store/*"
       ],
       "@/*": [
         "src/*"
