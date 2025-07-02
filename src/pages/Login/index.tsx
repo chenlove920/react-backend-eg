@@ -1,3 +1,4 @@
+import Tes from "@/components/Tes"
 export default () => {
-    return <div>login</div>
+    return <div>login<Tes></Tes></div>
 }
