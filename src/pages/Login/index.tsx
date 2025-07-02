@@ -1,16 +1,32 @@
-import { Button, Card, Form, Input, type FormProps } from "antd"
+import { Button, Card, Form, Input, message, type FormProps } from "antd"
 import type { UserFiledType } from "@/types/user"
-
+import { useAppDispatch } from "@store/hook"
+import { fetchLogin } from "@store/modules/userStore"
 import logo from '@assets/logo.png'
 import './index.scss'
+import { useNavigate } from "react-router"
+
 
 const Login = () => {
-    const onFinish: FormProps<UserFiledType>['onFinish'] = (values) => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onFinish: FormProps<UserFiledType>['onFinish'] = async (values) => {
         const { mobile, code } = values
         console.log(mobile, code, values)
+        try {
+            await dispatch(fetchLogin(values))
+             messageApi.success('登录成功');
+             navigate('/')
+        } catch (error) {
+            console.log(error)
+            messageApi.error('登录失败')
+        }
     }
     return (
         <div className="login">
+            {contextHolder}
             <Card className="login-container">
                 <img className="login-logo" src={logo} alt="" />
                 {/* 登录表单 */}
@@ -21,6 +37,7 @@ const Login = () => {
                 >
                     <Form.Item
                         name="mobile"
+                        initialValue="13800000002"
                         rules={[
                             {
                                 required: true,
@@ -36,6 +53,7 @@ const Login = () => {
                     </Form.Item>
                     <Form.Item
                         name="code"
+                        initialValue="246810"
                         rules={[
                             {
                                 required: true,
