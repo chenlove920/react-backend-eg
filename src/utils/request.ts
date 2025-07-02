@@ -1,5 +1,6 @@
 import axios from "axios"
-import { getLocalToken } from "./token"
+import { clearLocalToken, getLocalToken } from "./token"
+import router from "@router/index"
 const tokenPrefix = import.meta.env.VITE_TOKE_PREFIX
 const request = axios.create({
   baseURL: `${__API_URL__}/${__API_VERSION__}`,
@@ -26,6 +27,12 @@ request.interceptors.response.use((response) => {
 }, (error) => {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+  //监控401， token失效
+  if (error.response.status === 401) {
+    clearLocalToken()
+    router.navigate('/login')
+    window.location.reload()
+  }
   return Promise.reject(error)
 })
 

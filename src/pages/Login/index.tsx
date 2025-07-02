@@ -13,14 +13,12 @@ const Login = () => {
     const [messageApi, contextHolder] = message.useMessage();
 
     const onFinish: FormProps<UserFiledType>['onFinish'] = async (values) => {
-        const { mobile, code } = values
-        console.log(mobile, code, values)
+        // const { mobile, code } = values
         try {
             await dispatch(fetchLogin(values))
              messageApi.success('登录成功');
              navigate('/')
         } catch (error) {
-            console.log(error)
             messageApi.error('登录失败')
         }
     }
