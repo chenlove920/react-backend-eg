@@ -1,3 +1,14 @@
 import { request } from "./request";
+import {
+    setLocalToken,
+    getLocalToken,
+    clearLocalToken
+} from './token'
 
-export {request}
+
+export {
+    request,
+    setLocalToken,
+    getLocalToken,
+    clearLocalToken
+}
