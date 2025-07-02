@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@store/hook"
 import { add } from '@store/modules/testStore'
 import { Button, Flex } from 'antd';
 import './index.scss'
+import { request } from "@/utils";
 
 export default () => {
     const { count } = useAppSelector(state => state.test)
@@ -10,6 +11,9 @@ export default () => {
     const plus = () => {
         dispatch(add())
     }
+
+    request.post('/authorizations')
+    console.log(__API_URL__)
     return (
         <Flex gap="small" wrap>
             login
