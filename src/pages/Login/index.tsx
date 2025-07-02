@@ -2,7 +2,7 @@ import Tes from "@/components/Tes"
 import { useAppDispatch, useAppSelector } from "@store/hook"
 import { add } from '@store/modules/testStore'
 import { Button, Flex } from 'antd';
-
+import './index.scss'
 
 export default () => {
     const { count } = useAppSelector(state => state.test)
