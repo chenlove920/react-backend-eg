@@ -1,21 +1,62 @@
-import Tes from "@/components/Tes"
-import { useAppDispatch, useAppSelector } from "@store/hook"
-import { add } from '@store/modules/testStore'
-import { Button, Flex } from 'antd';
+import { Button, Card, Form, Input, type FormProps } from "antd"
+import type { UserFiledType } from "@/types/user"
+
+import logo from '@assets/logo.png'
 import './index.scss'
 
-export default () => {
-    const { count } = useAppSelector(state => state.test)
-    const dispatch = useAppDispatch()
-    const plus = () => {
-        dispatch(add())
+const Login = () => {
+    const onFinish: FormProps<UserFiledType>['onFinish'] = (values) => {
+        const { mobile, code } = values
+        console.log(mobile, code, values)
     }
-    return (
-        <Flex gap="small" wrap>
-            login
-            <Tes></Tes>{count}
-            <Button  type="primary" onClick={plus}>plus</Button>
-        </Flex>
-    )
+    // const onFinishFailed = ({ values, errorFields, outOfDate }) => {
 
+    // }
+    return (
+        <div className="login">
+            <Card className="login-container">
+                <img className="login-logo" src={logo} alt="" />
+                {/* 登录表单 */}
+                <Form
+                    name="userForm"
+                    onFinish={onFinish}
+                    validateTrigger="onBlur"
+                >
+                    <Form.Item
+                        name="mobile"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入手机号',
+                            },
+                            {
+                                pattern: /^1[3-9]\d{9}$/,
+                                message: '请输入正确的手机号格式'
+                            }
+                        ]}
+                    >
+                        <Input size="large" placeholder="请输入手机号" />
+                    </Form.Item>
+                    <Form.Item
+                        name="code"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入验证码',
+                            }
+                        ]}
+                    >
+                        <Input size="large" placeholder="请输入验证码" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" size="large" block>
+                            登录
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div >
+    )
 }
+
+export default Login
