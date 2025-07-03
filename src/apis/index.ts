@@ -1,7 +1,8 @@
 export const LOGINURL = '/authorizations'
-export const USERINFO = '/user/profile'
-export const ARTICLECHANNEL = '/channels'
-export const ARTICLEADD = '/mp/articles?draft=false'
+export const USERINFOAPI = '/user/profile'
+export const ARTICLECHANNELAPI = '/channels'
+export const ARTICLEADDAPI = '/mp/articles?draft=false'
+export const IMAGEUPLOADAPI = "/upload"
 
 export enum methodTyps   {
     POST = 'POST',

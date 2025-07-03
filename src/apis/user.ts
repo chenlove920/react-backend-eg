@@ -1,5 +1,5 @@
 import { request } from "@/utils";
-import { LOGINURL, methodTyps, USERINFO } from ".";
+import { LOGINURL, methodTyps, USERINFOAPI } from ".";
 import type { UserFiledType } from "@/types/user";
 
 
@@ -15,7 +15,7 @@ export const loginAPI  =  (formData:UserFiledType) =>  {
 // 用户信息
 export const  userInfoAPI = () => {
     return request({
-        url: USERINFO,
+        url: USERINFOAPI,
         method: methodTyps.GET,
     })
 }
