@@ -18,25 +18,17 @@ import ReactQuill from 'react-quill-new';
 import { Link } from 'react-router'
 import 'react-quill-new/dist/quill.snow.css';
 import './index.scss'
-import { useEffect, useRef, useState } from 'react';
-import { createArticleAPI, getChannelAPI } from '@/apis/article';
-import { ImageCountType, type ArticleAddType, type ChannelType } from '@/types/article';
+import {  useRef, useState } from 'react';
+import { createArticleAPI } from '@/apis/article';
+import { ImageCountType, type ArticleAddType } from '@/types/article';
 import { PlusOutlined } from '@ant-design/icons';
 import { baseURL } from '@/utils/request';
 import { IMAGEUPLOADAPI } from '@/apis';
+import { useChannel } from '@/hooks/useChannel';
 
 
 const Publish = () => {
-    // 获取频道列表
-    const [channelList, setChannelList] = useState<ChannelType[]>([])
-
-    const getChannelList = async () => {
-        const res = await getChannelAPI()
-        setChannelList(res.data.channels)
-    }
-    useEffect(() => {
-        getChannelList()
-    }, [])
+    const {channelList} = useChannel()
 
 
     // 控制图片Type
