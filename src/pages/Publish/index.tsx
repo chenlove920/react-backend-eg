@@ -11,7 +11,8 @@ import {
     type FormProps,
     type UploadProps,
     type RadioChangeEvent,
-    type UploadFile
+    type UploadFile,
+    message
 } from 'antd'
 import ReactQuill from 'react-quill-new';
 import { Link } from 'react-router'
@@ -19,7 +20,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import './index.scss'
 import { useEffect, useRef, useState } from 'react';
 import { createArticleAPI, getChannelAPI } from '@/apis/article';
-import type { ArticleAddType, ChannelType } from '@/types/article';
+import { ImageCountType, type ArticleAddType, type ChannelType } from '@/types/article';
 import { PlusOutlined } from '@ant-design/icons';
 import { baseURL } from '@/utils/request';
 import { IMAGEUPLOADAPI } from '@/apis';
@@ -28,7 +29,7 @@ import { IMAGEUPLOADAPI } from '@/apis';
 const Publish = () => {
     // 获取频道列表
     const [channelList, setChannelList] = useState<ChannelType[]>([])
-    
+
     const getChannelList = async () => {
         const res = await getChannelAPI()
         setChannelList(res.data.channels)
@@ -37,13 +38,11 @@ const Publish = () => {
         getChannelList()
     }, [])
 
-    const onFinsh: FormProps<ArticleAddType>['onFinish'] = (values) => {
-        createArticleAPI(values)
-    }
+
     // 控制图片Type
     const [imageList, setImageList] = useState<UploadFile[]>([])
     const cacheImageList = useRef<UploadFile[]>([])
-    const [imageType, setImageType] = useState(0)
+    const [imageType, setImageType] = useState<ImageCountType>(ImageCountType.NO)
     const onTypeChange = (e: RadioChangeEvent) => {
         const type = e.target.value
         setImageType(type)
@@ -59,7 +58,20 @@ const Publish = () => {
 
     const handleChange: UploadProps['onChange'] = (info) => {
         setImageList(info.fileList)
-        cacheImageList.current = info.fileList 
+        cacheImageList.current = info.fileList
+    }
+    const onFinsh: FormProps<ArticleAddType>['onFinish'] = (values) => {
+        if (imageType !== imageList.length) return message.warning('图片类型和数量不一致')
+        const data: ArticleAddType = {
+            title: values.title,
+            content: values.content,
+            cover: {
+                type: imageType,
+                images: imageType === ImageCountType.NO ? [] : imageList.map(item => item.response.data.url)
+            },
+            channel_id: values.channel_id
+        }
+        createArticleAPI(data)
     }
     const uploadUrl = `${baseURL}${IMAGEUPLOADAPI}`
     const { Option } = Select
@@ -106,7 +118,7 @@ const Publish = () => {
                                 <Radio value={0}>无图</Radio>
                             </Radio.Group>
                         </Form.Item>
-                        {imageType > 0 && <Upload
+                        {imageType > ImageCountType.NO && <Upload
                             listType="picture-card"
                             showUploadList
                             action={uploadUrl}
