@@ -2,8 +2,9 @@ import axios from "axios"
 import { clearLocalToken, getLocalToken } from "./token"
 import router from "@router/index"
 const tokenPrefix = import.meta.env.VITE_TOKE_PREFIX
+const baseURL = `${__API_URL__}/${__API_VERSION__}`
 const request = axios.create({
-  baseURL: `${__API_URL__}/${__API_VERSION__}`,
+  baseURL,
   timeout: 5000
 })
 
@@ -36,4 +37,5 @@ request.interceptors.response.use((response) => {
   return Promise.reject(error)
 })
 
+export {baseURL}
 export { request }
