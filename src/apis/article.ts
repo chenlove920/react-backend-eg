@@ -1,10 +1,20 @@
 import { request } from "@/utils"
-import { ARTICLECHANNEL, methodTyps } from "."
+import { ARTICLEADD, ARTICLECHANNEL, methodTyps } from "."
+import type { ArticleAddType } from "@/types/article"
 
 // 登录请求
-export const getChannelAPI  =  () =>  {
+export const getChannelAPI = () => {
     return request({
         url: ARTICLECHANNEL,
         method: methodTyps.GET,
+    })
+}
+
+// 提交文章
+export const createArticleAPI = (formData: ArticleAddType) => {
+ return request({
+        url: ARTICLEADD,
+        method: methodTyps.POST,
+        data: formData
     })
 }

@@ -7,15 +7,16 @@ import {
     Input,
     Upload,
     Space,
-    Select
+    Select,
+    type FormProps
 } from 'antd'
 import ReactQuill from 'react-quill-new';
-import { Link } from 'react-router'
+import { Link} from 'react-router'
 import 'react-quill-new/dist/quill.snow.css';
 import './index.scss'
 import { useEffect, useState } from 'react';
-import { getChannelAPI } from '@/apis/article';
-import type { ChannelType } from '@/types/article';
+import { createArticleAPI, getChannelAPI } from '@/apis/article';
+import type { ArticleAddType, ChannelType } from '@/types/article';
 
 
 const Publish = () => {
@@ -28,6 +29,9 @@ const Publish = () => {
     useEffect(() => {
         getChannelList()
     }, [])
+    const onFinsh: FormProps<ArticleAddType>['onFinish'] = (values) => {
+        createArticleAPI(values)
+    }
     const { Option } = Select
     return (
         <div className="publish">
@@ -44,6 +48,7 @@ const Publish = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     initialValues={{ type: 1 }}
+                    onFinish={onFinsh}
                 >
                     <Form.Item
                         label="标题"
