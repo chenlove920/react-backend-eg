@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { AppDispatch } from '..'
 import { clearLocalToken, getLocalToken, request, setLocalToken } from '@/utils'
 import { LOGINURL, USERINFO } from '@/apis'
+import { loginAPI, userInfoAPI } from '@/apis/user'
 
 const userStore = createSlice({
   name: 'user',
@@ -37,7 +38,7 @@ const userReducer = userStore.reducer
 // 异步方法封装
 const fetchLogin = (loginForm: UserFiledType) => {
   return async (dispatch: AppDispatch) => {
-    const res = await request.post(LOGINURL, loginForm)
+    const res = await loginAPI(loginForm)
     // if (res.data.token) {
     dispatch(setToken(res.data.token))
     // }
@@ -46,7 +47,7 @@ const fetchLogin = (loginForm: UserFiledType) => {
 // 获取个人信息
 const fetchUserInfo = () => {
   return async (dispatch: AppDispatch) => {
-    const res = await request.get(USERINFO)
+    const res = await userInfoAPI()
     // if (res.data) {
     dispatch(setUserInfo(res.data))
     // }
