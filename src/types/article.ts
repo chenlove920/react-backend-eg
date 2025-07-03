@@ -8,12 +8,13 @@ export const enum ImageCountType {
     THREE = 3,
     AUTO = -1
 }
+export interface ArticleImgType {
+    type: ImageCountType
+    images: string[]
+}
 export interface ArticleAddType {
     title: string,
     content: string,
-    cover: {
-        type: ImageCountType
-        images: string[] 
-    },
+    cover: ArticleImgType,
     channel_id: number
 }
