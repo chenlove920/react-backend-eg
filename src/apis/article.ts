@@ -1,6 +1,6 @@
 import { request } from "@/utils"
-import { ARTICLEADDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, DELARTICLEAPI, methodTyps } from "."
-import type { ArticleAddType, ArticleListParamsType } from "@/types/article"
+import { ARTICLEADDAPI, ARTICLEBYIDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, DELARTICLEAPI, methodTyps } from "."
+import type { ArticleAddType, ArticleParamsType, ArticleResponseType } from "@/types/article"
 
 // 登录请求
 export const getChannelAPI = () => {
@@ -19,7 +19,7 @@ export const createArticleAPI = (formData: ArticleAddType) => {
     })
 }
 // 获取文章
-export const getArticleListAPI = (params: ArticleListParamsType) => {
+export const getArticleListAPI = (params: ArticleParamsType) => {
     return request({
         url: ARTICLELISTAPI,
         method: methodTyps.GET,
@@ -33,5 +33,13 @@ export const delArticleAPI = (id: string) => {
     return request({
         url: DELARTICLEAPI.replace(':id', id),
         method: methodTyps.DELETE,
+    })
+}
+
+// 通过ID获取文章数据
+export const getArticleById = (id: string):Promise<ArticleResponseType> => {
+    return request({
+        url: ARTICLEBYIDAPI.replace(':id', id),
+        method: methodTyps.GET,
     })
 }

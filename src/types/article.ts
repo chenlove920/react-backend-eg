@@ -46,4 +46,9 @@ export interface ArticleParamsType extends ArticleAddType {
     read_count: number,
     id: string
 }
+// 返回类型
+export interface ArticleResponseType {
+    data: ArticleParamsType,
+    message: string
+}
 

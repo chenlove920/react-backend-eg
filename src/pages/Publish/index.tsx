@@ -15,11 +15,11 @@ import {
     message
 } from 'antd'
 import ReactQuill from 'react-quill-new';
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import 'react-quill-new/dist/quill.snow.css';
 import './index.scss'
-import {  useRef, useState } from 'react';
-import { createArticleAPI } from '@/apis/article';
+import { useEffect, useRef, useState } from 'react';
+import { createArticleAPI, getArticleById } from '@/apis/article';
 import { ImageCountType, type ArticleAddType } from '@/types/article';
 import { PlusOutlined } from '@ant-design/icons';
 import { baseURL } from '@/utils/request';
@@ -28,8 +28,7 @@ import { useChannel } from '@/hooks/useChannel';
 
 
 const Publish = () => {
-    const {channelList} = useChannel()
-
+    const { channelList } = useChannel()
 
     // 控制图片Type
     const [imageList, setImageList] = useState<UploadFile[]>([])
@@ -65,6 +64,37 @@ const Publish = () => {
         }
         createArticleAPI(data)
     }
+    const [searchParams] = useSearchParams()
+    const articleId = searchParams.get('id')
+    const [form] = Form.useForm()
+
+    const getArticle = async (id: string) => {
+        const res = await getArticleById(id)
+        // const { cover, ...formValue } = res.data
+        // 设置表单数据
+        const type = res.data.cover.type
+        form.setFieldsValue({
+            ...res.data,
+            type: type
+        })
+        // 显示图片
+        setImageType(type)
+        const images = res.data.cover.images.map(url => {
+            return { url }
+        }) as UploadFile[]
+
+        setImageList(images)
+    }
+
+    useEffect(() => {
+        if (articleId) {
+            // 拉取数据回显
+            getArticle(articleId)
+        }
+    }, [articleId, form])
+
+
+
     const uploadUrl = `${baseURL}${IMAGEUPLOADAPI}`
     const { Option } = Select
     return (
@@ -73,7 +103,7 @@ const Publish = () => {
                 title={
                     <Breadcrumb items={[
                         { title: <Link to={'/'}>首页</Link> },
-                        { title: '发布文章' },
+                        { title: `${articleId ? '编辑文章' : '发布文章'}` },
                     ]}
                     />
                 }
@@ -83,6 +113,7 @@ const Publish = () => {
                     wrapperCol={{ span: 16 }}
                     initialValues={{ type: imageType }}
                     onFinish={onFinsh}
+                    form={form}
                 >
                     <Form.Item
                         label="标题"
@@ -139,7 +170,7 @@ const Publish = () => {
                     <Form.Item wrapperCol={{ offset: 4 }}>
                         <Space>
                             <Button size="large" type="primary" htmlType="submit">
-                                发布文章
+                                {articleId ? '更新文章' : '发布文章'}
                             </Button>
                         </Space>
                     </Form.Item>
