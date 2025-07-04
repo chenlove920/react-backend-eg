@@ -1,17 +1,23 @@
-import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Space, Table, Tag, type FormProps } from 'antd'
+import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Space, Table, Tag, type FormProps, Popconfirm, type PopconfirmProps } from 'antd'
 import locale from 'antd/es/date-picker/locale/zh_CN'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { type ArticleImgType, type ArticleListParamsType, type ArticleSearchType } from '@/types/article'
+import { type ArticleImgType, type ArticleParamsType, type ArticleSearchParamsType, type ArticleSearchType } from '@/types/article'
 import error from '@assets/error.png'
 import { Link } from 'react-router'
 import { useChannel } from '@/hooks/useChannel'
 import { useEffect, useState } from 'react'
-import { getArticleListAPI } from '@/apis/article'
+import { delArticleAPI, getArticleListAPI } from '@/apis/article'
 const { Option } = Select
 const { RangePicker } = DatePicker
 
 const Article = () => {
-
+    // 删除
+    const delArticle = async (data: ArticleParamsType) => {
+        await delArticleAPI(data.id)
+        setParams({
+            ...params
+        })
+    }
     // 准备列数据
     const { channelList } = useChannel()
     const columns = [
@@ -62,16 +68,23 @@ const Article = () => {
         },
         {
             title: '操作',
-            render: () => {
+            render: (data:ArticleParamsType) => {
                 return (
                     <Space size="middle">
                         <Button type="primary" shape="circle" icon={<EditOutlined />} />
-                        <Button
-                            type="primary"
-                            danger
-                            shape="circle"
-                            icon={<DeleteOutlined />}
-                        />
+                        <Popconfirm
+                            title="确认删除该条文章吗?"
+                            onConfirm={() => delArticle(data)}
+                            okText="确认"
+                            cancelText="取消"
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                shape="circle"
+                                icon={<DeleteOutlined />}
+                            />
+                        </Popconfirm>
                     </Space>
                 )
             }
@@ -97,7 +110,7 @@ const Article = () => {
 
     // 筛选功能
     // 1. 准备参数
-    const [params, setParams] = useState<ArticleListParamsType>({
+    const [params, setParams] = useState<ArticleSearchParamsType>({
         page: 1,
         per_page: 10,
         begin_pubdate: '',
@@ -122,13 +135,15 @@ const Article = () => {
         // reqData依赖项发生变化 重复执行副作用函数 
     }
     // 分页
-    const onPageChange = (page:number) => {
+    const onPageChange = (page: number) => {
         // 修改参数依赖项 引发数据的重新获取列表渲染
         setParams({
             ...params,
             page
         })
     }
+
+
     return (
         <div>
             <Card

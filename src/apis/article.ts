@@ -1,5 +1,5 @@
 import { request } from "@/utils"
-import { ARTICLEADDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, methodTyps } from "."
+import { ARTICLEADDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, DELARTICLEAPI, methodTyps } from "."
 import type { ArticleAddType, ArticleListParamsType } from "@/types/article"
 
 // 登录请求
@@ -23,6 +23,15 @@ export const getArticleListAPI = (params: ArticleListParamsType) => {
     return request({
         url: ARTICLELISTAPI,
         method: methodTyps.GET,
-        params: params
+        // 开启没数据
+        // params: params
+    })
+}
+
+// 删除文章
+export const delArticleAPI = (id: string) => {
+    return request({
+        url: DELARTICLEAPI.replace(':id', id),
+        method: methodTyps.DELETE,
     })
 }
