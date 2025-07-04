@@ -6,8 +6,10 @@ export const IMAGEUPLOADAPI = "/upload"
 export const ARTICLELISTAPI = "/mp/articles"
 export const DELARTICLEAPI = "mp/articles/:id"
 export const ARTICLEBYIDAPI = "mp/articles/:id"
+export const UPDATEARTICLEAPI = '/mp/articles/:id?draft=false'
 export enum methodTyps   {
     POST = 'POST',
     GET = 'GET',
-    DELETE = "DELETE"
+    DELETE = "DELETE",
+    PUT = "PUT"
 }

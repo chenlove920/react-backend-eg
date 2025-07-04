@@ -1,5 +1,5 @@
 import { request } from "@/utils"
-import { ARTICLEADDAPI, ARTICLEBYIDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, DELARTICLEAPI, methodTyps } from "."
+import { ARTICLEADDAPI, ARTICLEBYIDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, DELARTICLEAPI, methodTyps, UPDATEARTICLEAPI } from "."
 import type { ArticleAddType, ArticleParamsType, ArticleResponseType } from "@/types/article"
 
 // 登录请求
@@ -15,6 +15,15 @@ export const createArticleAPI = (formData: ArticleAddType) => {
     return request({
         url: ARTICLEADDAPI,
         method: methodTyps.POST,
+        data: formData
+    })
+}
+
+// 更新文章
+export const updateArticleAPI = (articleID:string, formData: ArticleAddType) => {
+    return request({
+        url: UPDATEARTICLEAPI.replace(':id', articleID),
+        method: methodTyps.PUT,
         data: formData
     })
 }

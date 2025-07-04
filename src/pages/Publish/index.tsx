@@ -19,7 +19,7 @@ import { Link, useSearchParams } from 'react-router'
 import 'react-quill-new/dist/quill.snow.css';
 import './index.scss'
 import { useEffect, useRef, useState } from 'react';
-import { createArticleAPI, getArticleById } from '@/apis/article';
+import { createArticleAPI, getArticleById, updateArticleAPI } from '@/apis/article';
 import { ImageCountType, type ArticleAddType } from '@/types/article';
 import { PlusOutlined } from '@ant-design/icons';
 import { baseURL } from '@/utils/request';
@@ -58,11 +58,13 @@ const Publish = () => {
             content: values.content,
             cover: {
                 type: imageType,
-                images: imageType === ImageCountType.NO ? [] : imageList.map(item => item.response.data.url)
+                // 编辑图片五item.response.data
+                images: imageList.map(item => item.response ? item.response.data.url : item.url)
             },
             channel_id: values.channel_id
         }
-        createArticleAPI(data)
+        articleId ? updateArticleAPI(articleId, data) : createArticleAPI(data)
+
     }
     const [searchParams] = useSearchParams()
     const articleId = searchParams.get('id')
