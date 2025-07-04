@@ -33,7 +33,7 @@ export const getArticleListAPI = (params: ArticleSearchParamsType) => {
         url: ARTICLELISTAPI,
         method: methodTyps.GET,
         // 开启没数据
-        params: params
+        // params: params
     })
 }
 
