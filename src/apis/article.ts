@@ -1,6 +1,6 @@
 import { request } from "@/utils"
 import { ARTICLEADDAPI, ARTICLEBYIDAPI, ARTICLECHANNELAPI, ARTICLELISTAPI, DELARTICLEAPI, methodTyps, UPDATEARTICLEAPI } from "."
-import type { ArticleAddType, ArticleParamsType, ArticleResponseType } from "@/types/article"
+import type { ArticleAddType, ArticleResponseType, ArticleSearchParamsType } from "@/types/article"
 
 // 登录请求
 export const getChannelAPI = () => {
@@ -28,12 +28,12 @@ export const updateArticleAPI = (articleID:string, formData: ArticleAddType) => 
     })
 }
 // 获取文章
-export const getArticleListAPI = (params: ArticleParamsType) => {
+export const getArticleListAPI = (params: ArticleSearchParamsType) => {
     return request({
         url: ARTICLELISTAPI,
         method: methodTyps.GET,
         // 开启没数据
-        // params: params
+        params: params
     })
 }
 

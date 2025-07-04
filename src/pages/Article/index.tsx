@@ -1,4 +1,4 @@
-import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Space, Table, Tag, type FormProps, Popconfirm, type PopconfirmProps } from 'antd'
+import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Space, Table, Tag, type FormProps, Popconfirm, } from 'antd'
 import locale from 'antd/es/date-picker/locale/zh_CN'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { type ArticleImgType, type ArticleParamsType, type ArticleSearchParamsType, type ArticleSearchType } from '@/types/article'

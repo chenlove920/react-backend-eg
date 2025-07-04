@@ -1,8 +1,7 @@
 import type { UserFiledType, UserInfoType, UserStoreType } from '@/types/user'
 import { createSlice } from '@reduxjs/toolkit'
 import type { AppDispatch } from '..'
-import { clearLocalToken, getLocalToken, request, setLocalToken } from '@/utils'
-import { LOGINURL, USERINFO } from '@/apis'
+import { clearLocalToken, getLocalToken, setLocalToken } from '@/utils'
 import { loginAPI, userInfoAPI } from '@/apis/user'
 
 const userStore = createSlice({
