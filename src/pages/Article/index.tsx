@@ -3,7 +3,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { type ArticleImgType, type ArticleParamsType, type ArticleSearchParamsType, type ArticleSearchType } from '@/types/article'
 import error from '@assets/error.png'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useChannel } from '@/hooks/useChannel'
 import { useEffect, useState } from 'react'
 import { delArticleAPI, getArticleListAPI } from '@/apis/article'
@@ -11,6 +11,7 @@ const { Option } = Select
 const { RangePicker } = DatePicker
 
 const Article = () => {
+    const navagite = useNavigate()
     // 删除
     const delArticle = async (data: ArticleParamsType) => {
         await delArticleAPI(data.id)
@@ -68,10 +69,15 @@ const Article = () => {
         },
         {
             title: '操作',
-            render: (data:ArticleParamsType) => {
+            render: (data: ArticleParamsType) => {
                 return (
                     <Space size="middle">
-                        <Button type="primary" shape="circle" icon={<EditOutlined />} />
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            icon={<EditOutlined />}
+                            onClick={() => navagite(`/publish?id=${data.id}`)}
+                         />
                         <Popconfirm
                             title="确认删除该条文章吗?"
                             onConfirm={() => delArticle(data)}
