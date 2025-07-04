@@ -2,29 +2,45 @@ import { createBrowserRouter } from "react-router";
 import Login from "@pages/Login";
 import Layout from "@pages/Layout";
 import { AuthRoute } from "@components/AuthRoute";
-import Home from "@pages/Home";
-import Publish from "@pages/Publish";
-import Article from "@pages/Article";
+
 
 
 export default createBrowserRouter([
     {
         path: '/',
         Component: Layout,
-        loader:AuthRoute,
+        loader: AuthRoute,
         children: [
             {
-                path:'/',
-                Component: Home,
-                index:true
+                path: '/',
+                // Component: Home,
+                lazy: async () => {
+                    const [Component] = await Promise.all([
+                        import("@pages/Home"),
+                    ]);
+                    return { Component: Component.default };
+                },
+                index: true
             },
             {
-                path:'/publish',
-                Component:Publish
+                path: '/publish',
+                // Component: Publish
+                lazy: async () => {
+                    const [Component] = await Promise.all([
+                        import("@pages/Publish"),
+                    ]);
+                    return { Component: Component.default };
+                },
             },
             {
                 path: '/article',
-                Component: Article
+                // Component: Article
+                lazy: async () => {
+                    const [Component] = await Promise.all([
+                        import("@pages/Article"),
+                    ]);
+                    return { Component: Component.default };
+                },
             }
         ]
     },
